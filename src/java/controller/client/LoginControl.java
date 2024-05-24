@@ -4,16 +4,25 @@
  */
 package controller.client;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Base64;
+import model.Product;
 import model.User;
 
 public class LoginControl extends HttpServlet {
@@ -38,29 +47,50 @@ public class LoginControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        ArrayList<Product> cart = getCartFromCookie(request);
+        request.setAttribute("cartSize", cart.size());
+        request.getRequestDispatcher("client/login.jsp").forward(request, response);
+    }
+    
+     private ArrayList<Product> getCartFromCookie(HttpServletRequest request) throws UnsupportedEncodingException {
+        Cookie[] cookies = request.getCookies();
+        ArrayList<Product> cart = new ArrayList<>();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("cart")) {
+                    String cartJson = URLDecoder.decode(cookie.getValue(), "UTF-8");
+                    Type listType = new TypeToken<ArrayList<Product>>() {
+                    }.getType();
+                    cart = new Gson().fromJson(cartJson, listType);
+                    break;
+                }
+            }
+        }
+        return cart;
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         String hashedPassword = hashPassword(password);
         User user = new User();
-        user.setUsername(username);
+        user.setEmail(email);
         user.setPassword(hashedPassword);
 
         UserDAO ud = new UserDAO();
         if (ud.checkLogin(user)) {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("acc", user);
             if (user.getPosition().equalsIgnoreCase("admin")) {
-                response.sendRedirect("admin");
+                response.sendRedirect("admin/category");
             } else {
                 response.sendRedirect("home");
             }
         } else {
             request.setAttribute("failedLogin", "Email or Password is wrong");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("client/login.jsp").forward(request, response);
         }
     }
 

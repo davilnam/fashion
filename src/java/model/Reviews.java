@@ -5,6 +5,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.io.Serializable;
 public class Reviews implements Serializable{
     private int id;
     private double rating;
+    private Date reviewDate;
     private String comment;
     private Product product;
     private User user;
@@ -20,9 +22,10 @@ public class Reviews implements Serializable{
     public Reviews() {
     }
 
-    public Reviews(int id, double rating, String comment, Product product, User user) {
+    public Reviews(int id, Date reviewDate, double rating, String comment, Product product, User user) {
         this.id = id;
         this.rating = rating;
+        this.reviewDate = reviewDate;
         this.comment = comment;
         this.product = product;
         this.user = user;
@@ -34,6 +37,14 @@ public class Reviews implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Date getReviewDate() {
+        return reviewDate;
+    }
+
+    public void setReviewDate(Date reviewDate) {
+        this.reviewDate = reviewDate;
     }
 
     public double getRating() {

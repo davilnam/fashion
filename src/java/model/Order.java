@@ -20,14 +20,26 @@ public class Order implements Serializable{
     private String note;
     private Status status;
     private PaymentMethod paymentMethod;
-    private User User;
+    private User user;
     private ArrayList<OrderDetail> orderDetails;
 
     public Order() {
         orderDetails = new ArrayList<>();
     }
+    
+    public Order(Order o){
+        this.id = o.getId();
+        this.orderDate = o.getOrderDate();
+        this.totalAmount = o.getTotalAmount();
+        this.reasonForCancel = o.getReasonForCancel();
+        this.note = o.getNote();
+        this.status = o.getStatus();
+        this.paymentMethod = o.getPaymentMethod();
+        this.user = o.getUser();
+        this.orderDetails = o.getOrderDetails();
+    }
 
-    public Order(int id, Date orderDate, double totalAmount, String reasonForCancel, String note, Status status, PaymentMethod paymentMethod, User User, ArrayList<OrderDetail> orderDetails) {
+    public Order(int id, Date orderDate, double totalAmount, String reasonForCancel, String note, Status status, PaymentMethod paymentMethod, User user, ArrayList<OrderDetail> orderDetails) {
         this.id = id;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
@@ -35,7 +47,7 @@ public class Order implements Serializable{
         this.note = note;
         this.status = status;
         this.paymentMethod = paymentMethod;
-        this.User = User;
+        this.user = user;
         this.orderDetails = orderDetails;
     }
 
@@ -96,11 +108,11 @@ public class Order implements Serializable{
     }
 
     public User getUser() {
-        return User;
+        return user;
     }
 
-    public void setUser(User User) {
-        this.User = User;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public ArrayList<OrderDetail> getOrderDetails() {

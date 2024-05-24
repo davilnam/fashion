@@ -19,6 +19,12 @@ public class Category implements Serializable{
     public Category() {
         products = new ArrayList<>();
     }
+    
+    public Category(Category c){
+        this.id = c.getId();
+        this.name = c.getName();
+        this.products = c.getProducts();
+    }
 
     public Category(int id, String name, ArrayList<Product> products) {
         this.id = id;

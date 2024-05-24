@@ -17,6 +17,12 @@ public class Inventory implements Serializable{
 
     public Inventory() {
     }
+    
+    public Inventory(Inventory i){
+        this.id = i.getId();
+        this.stockQuantity = i.getStockQuantity();
+        this.productOption = i.getProductOption();
+    }
 
     public Inventory(int stockQuantity, ProductOption productOption) {
         this.stockQuantity = stockQuantity;

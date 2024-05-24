@@ -11,7 +11,8 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class Product implements Serializable{
+public class Product implements Serializable {
+
     private int id;
     private String name;
     private String image;
@@ -23,6 +24,16 @@ public class Product implements Serializable{
     public Product() {
         productImages = new ArrayList<>();
         inventory = new ArrayList<>();
+    }
+
+    public Product(Product p) {
+        this.id = p.getId();
+        this.name = p.getName();
+        this.image = p.getImage();
+        this.description = p.getDescription();
+        this.price = p.getPrice();
+        this.productImages = p.getProductImages();
+        this.inventory = p.getInventory();
     }
 
     public Product(int id, String name, String image, String description, double price, ArrayList<ProductImage> productImages, ArrayList<Inventory> inventory) {
@@ -90,6 +101,5 @@ public class Product implements Serializable{
     public void setInventory(ArrayList<Inventory> inventory) {
         this.inventory = inventory;
     }
-    
-    
+
 }

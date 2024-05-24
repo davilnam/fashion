@@ -1,0 +1,31 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Apr 27, 2024, 6:26:27 PM
+    Author     : PC
+*/
+
+#show_hide_password{
+    position: relative;
+}
+
+a:hover{
+    color: #007bff;
+}
+
+#show_hide_password a{
+    color: #007bff;
+}
+
+#show_hide_password a:hover{
+    color: #007bff;
+}
+
+.input-group-addon{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+}
